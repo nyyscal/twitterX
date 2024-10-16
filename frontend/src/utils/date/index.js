@@ -1,0 +1,41 @@
+export const formatPostDate = (createdAt) =>{
+  const currentDate = new Date()
+  const createdAtDate = new Date(createdAt)
+
+  const timeDifferenceInSeconds = Math.floor((currentDate - createdAtDate)/1000)
+  const timeDifferenceInMinutes = Math.floor((timeDifferenceInSeconds)/60)
+  const timeDifferenceInHours = Math.floor((timeDifferenceInMinutes)/60)
+  const timeDifferenceInDays = Math.floor((timeDifferenceInHours)/24)
+  if(timeDifferenceInDays > 1){
+    return createdAtDate.toLocaleDateString("en-US",{month:"short",day:"numeric"});
+  }else if (timeDifferenceInDays === 1){
+    return "1d";
+  }else if (timeDifferenceInDays >= 1){
+    return `${timeDifferenceInHours}h`;
+  }else if (timeDifferenceInDays >= 1){
+    return `${timeDifferenceInMinutes}m`;
+  }else {
+    return "Just now";
+}
+}
+
+export const formatMemberSinceDate = (createdAt) =>{
+  const data = new Date(createdAt);
+  const months =[
+    "January",
+    "February",
+    "March",
+    "Apirl",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "Novermber",
+    "December",
+  ];
+  const month= months[Date.getMonth()]
+  const year = date.getFullYear();
+  return `Joined ${month} ${year}`
+}
