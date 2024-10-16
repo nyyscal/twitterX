@@ -62,7 +62,7 @@ function App() {
         />
         <Route
           path="/notifications"
-          element={!authUser ? <NotificationPage /> : <Navigate to="/" />}
+          element={!authUser ? <NotificationPage /> : <NotificationPage />}
         />
         <Route
           path="/profile/:username"
