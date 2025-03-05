@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path";
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
@@ -20,7 +21,8 @@ cloudinary.config({
 
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
+const __dirname = path.resolve()
 
 app.use(express.json({limit:"5mb"})); //PARSE REQ FROM BODY default is 100kb
 app.use(express.urlencoded({extended: true})); //PARSE FORM DATA URL ENCODED
@@ -31,8 +33,15 @@ app.use("/api/users", userRoutes)
 app.use("/api/posts", postRoutes)
 app.use("/api/notifications", notificationRoutes)
 
-app.listen(PORT, ()=>{
+if(process.env.NODE_ENV === "production"){
+ app.use(express.static(path.join(__dirname, "/frontend/dist")))
 
+  app.get("*", (req,res) =>{
+   res.sendFile(path.resolve(__dirname, "frontend","dist", "index.html"))
+ })
+} 
+
+app.listen(PORT, ()=>{
   connectMongoDB()
   console.log(`Server is running on PORT 8000! Link: http://localhost:${PORT}`)
 })
